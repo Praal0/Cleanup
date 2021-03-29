@@ -2,6 +2,7 @@ package com.cleanup.todoc.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -29,17 +30,20 @@ public class Task {
     /**
      * The unique identifier of the project associated to the task
      */
+    @ColumnInfo(name = "projectId")
     private long projectId;
 
     /**
      * The name of the task
      */
     // Suppress warning because setName is called in constructor
+    @ColumnInfo(name = "name")
     private String name;
 
     /**
      * The timestamp when the task has been created
      */
+    @ColumnInfo(name = "creationTimestamp")
     private long creationTimestamp;
 
     /**
@@ -57,6 +61,8 @@ public class Task {
         this.setCreationTimestamp(creationTimestamp);
     }
 
+    // --- GETTER ---
+
     /**
      * Returns the unique identifier of the task.
      *
@@ -64,24 +70,6 @@ public class Task {
      */
     public long getId() {
         return id;
-    }
-
-    /**
-     * Sets the unique identifier of the task.
-     *
-     * @param id the unique idenifier of the task to set
-     */
-    private void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * Sets the unique identifier of the project associated to the task.
-     *
-     * @param projectId the unique identifier of the project associated to the task to set
-     */
-    private void setProjectId(long projectId) {
-        this.projectId = projectId;
     }
 
     /**
@@ -102,6 +90,26 @@ public class Task {
     @NonNull
     public String getName() {
         return name;
+    }
+
+
+    // --- SETTER ---
+    /**
+     * Sets the unique identifier of the task.
+     * @param id the unique idenifier of the task to set
+     *
+     */
+    private void setId(long id) {
+        this.id = id;
+    }
+
+    /**
+     * Sets the unique identifier of the project associated to the task.
+     *
+     * @param projectId the unique identifier of the project associated to the task to set
+     */
+    private void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 
     /**
