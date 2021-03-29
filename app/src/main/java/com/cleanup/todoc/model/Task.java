@@ -1,7 +1,10 @@
 package com.cleanup.todoc.model;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
 import java.util.Comparator;
 
@@ -9,11 +12,18 @@ import java.util.Comparator;
  * <p>Model for the tasks of the application.</p>
  *
  * @author Gaëtan HERFRAY
+ *
  */
+
+@Entity(foreignKeys = @ForeignKey(entity = Project.class,
+        parentColumns = "id",
+        childColumns = "projectId"))
+
 public class Task {
     /**
      * The unique identifier of the task
      */
+    @PrimaryKey
     private long id;
 
     /**
@@ -25,8 +35,6 @@ public class Task {
      * The name of the task
      */
     // Suppress warning because setName is called in constructor
-    @SuppressWarnings("NullableProblems")
-    @NonNull
     private String name;
 
     /**
