@@ -30,14 +30,12 @@ public class Task {
     /**
      * The unique identifier of the project associated to the task
      */
-    @ColumnInfo(name = "projectId")
     private long projectId;
 
     /**
      * The name of the task
      */
     // Suppress warning because setName is called in constructor
-    @ColumnInfo(name = "name")
     private String name;
 
     /**
