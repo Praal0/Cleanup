@@ -15,13 +15,13 @@ public interface ProjectDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Project project);
 
-    @Query("DELETE FROM Project")
+    @Query("DELETE FROM project")
     void deleteAll();
 
-    @Query("SELECT * FROM Project WHERE id = :id LIMIT 1")
+    @Query("SELECT * FROM project WHERE id = :id LIMIT 1")
     public LiveData<Project> loadProjectById(long id);
 
-    @Query("SELECT * from Project")
+    @Query("SELECT * from project")
     LiveData<List<Project>> loadAllProjects();
 
 }

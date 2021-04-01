@@ -12,25 +12,24 @@ import androidx.annotation.Nullable;
  *
  * @author Gaëtan HERFRAY
  */
-@Entity
+@Entity(tableName = "project")
 public class Project {
     /**
      * The unique identifier of the project
      */
     @PrimaryKey
-    private final long id;
+    private long id;
 
     /**
      * The name of the project
      */
     @NonNull
-    private final String name;
+    private String name;
 
     /**
      * The hex (ARGB) code of the color associated to the project
      */
-    @ColorInt
-    private final int color;
+    private int color;
 
     /**
      * Instantiates a new Project.
@@ -83,12 +82,11 @@ public class Project {
     public long getId() {
         return id;
     }
-
-    /**
-     * Returns the name of the project.
-     *
-     * @return the name of the project
-     */
+        /**
+         * Returns the name of the project.
+         *
+         * @return the name of the project
+         */
     @NonNull
     public String getName() {
         return name;
@@ -109,4 +107,14 @@ public class Project {
     public String toString() {
         return getName();
     }
+    // --- SETTER ---
+
+    //Setters for id
+    public  void setId(long id) {this.id = id;}
+
+    //Setters for name
+    public void setName(String name){this.name = name;}
+
+    //Setters for color
+    public void setColor(int color){this.color = color;}
 }

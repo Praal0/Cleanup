@@ -32,6 +32,11 @@ import java.util.Date;
  * @author Gaëtan HERFRAY
  */
 public class MainActivity extends AppCompatActivity implements TasksAdapter.DeleteTaskListener {
+
+    // 1 - FOR DATA
+    private ItemViewModel itemViewModel;
+
+
     /**
      * List of all projects available in the application
      */
@@ -135,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     @Override
     public void onDeleteTask(Task task) {
-        tasks.remove(task);
+        this.itemViewModel.deleteTask(task);
         updateTasks();
     }
 
@@ -208,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * @param task the task to be added to the list
      */
     private void addTask(@NonNull Task task) {
-        tasks.add(task);
+        this.itemViewModel.createTask(task);
         updateTasks();
     }
 
