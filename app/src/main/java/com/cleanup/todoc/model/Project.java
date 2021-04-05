@@ -18,17 +18,20 @@ public class Project {
      * The unique identifier of the project
      */
     @PrimaryKey
+    @ColumnInfo(name = "id")
     private long id;
 
     /**
      * The name of the project
      */
     @NonNull
+    @ColumnInfo(name = "name")
     private String name;
 
     /**
      * The hex (ARGB) code of the color associated to the project
      */
+    @ColumnInfo(name = "color")
     private int color;
 
     /**
@@ -38,7 +41,7 @@ public class Project {
      * @param name  the name of the project to set
      * @param color the hex (ARGB) code of the color associated to the project to set
      */
-    private Project(long id, @NonNull String name, @ColorInt int color) {
+    public Project(long id, @NonNull String name, @ColorInt int color) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -107,8 +110,8 @@ public class Project {
     public String toString() {
         return getName();
     }
-    // --- SETTER ---
 
+    // --- SETTER ---
     //Setters for id
     public  void setId(long id) {this.id = id;}
 

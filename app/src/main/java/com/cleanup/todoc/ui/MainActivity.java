@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
+import com.cleanup.todoc.ViewModel.ProjectViewModel;
+import com.cleanup.todoc.ViewModel.TaskViewModel;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
@@ -34,7 +36,8 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity implements TasksAdapter.DeleteTaskListener {
 
     // 1 - FOR DATA
-    private ItemViewModel itemViewModel;
+    private TaskViewModel taskViewModel;
+    private ProjectViewModel projectViewModel;
 
 
     /**
@@ -140,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     @Override
     public void onDeleteTask(Task task) {
-        this.itemViewModel.deleteTask(task);
+        this.taskViewModel.deleteTask(task);
         updateTasks();
     }
 
@@ -213,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * @param task the task to be added to the list
      */
     private void addTask(@NonNull Task task) {
-        this.itemViewModel.createTask(task);
+        this.taskViewModel.createTask(task);
         updateTasks();
     }
 

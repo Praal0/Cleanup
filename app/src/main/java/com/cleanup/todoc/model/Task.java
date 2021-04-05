@@ -25,6 +25,7 @@ public class Task {
      * The unique identifier of the task
      */
     @PrimaryKey
+    @ColumnInfo(name = "id")
     private long id;
 
     /**

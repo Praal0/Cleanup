@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
+import com.cleanup.todoc.ViewModel.ProjectViewModel;
+import com.cleanup.todoc.ViewModel.TaskViewModel;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
@@ -26,7 +28,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      */
     @NonNull
     private List<Task> tasks;
-    private ItemViewModel itemViewModel;
+    private TaskViewModel taskViewModel;
+    private ProjectViewModel projectViewModel;
 
     /**
      * The listener for when a task needs to be deleted

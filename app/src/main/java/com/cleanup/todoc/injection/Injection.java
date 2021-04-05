@@ -9,23 +9,31 @@ import com.cleanup.todoc.repositories.TaskDataRepository;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class injection {
-    public static ProjectDataRepository provideItemDataSource(Context context) {
+public class Injection {
+    public static ProjectDataRepository provideProjectDataSource(Context context) {
         SaveMyTripDatabase database = SaveMyTripDatabase.getInstance(context);
         return new ProjectDataRepository(database.projectDao());
     }
 
-    public static TaskDataRepository provideUserDataSource(Context context) {
+    public static TaskDataRepository provideTaskDataSource(Context context) {
         SaveMyTripDatabase database = SaveMyTripDatabase.getInstance(context);
         return new TaskDataRepository(database.taskDao());
     }
 
     public static Executor provideExecutor(){ return Executors.newSingleThreadExecutor(); }
 
-    public static ViewModelFactory provideViewModelFactory(Context context) {
-        ProjectDataRepository dataSourceProject = provideItemDataSource(context);
-        TaskDataRepository dataSourceTask = provideUserDataSource(context);
+    public static TaskModelFactory provideProjectModelFactory(Context context) {
+        TaskDataRepository dataSourceTask = provideTaskDataSource(context);
         Executor executor = provideExecutor();
-        return new ViewModelFactory(dataSourceProject, dataSourceTask, executor);
+        return new TaskModelFactory(dataSourceTask, executor);
     }
+
+    public static ProjectModelFactory provideTaskModelFactory(Context context) {
+        ProjectDataRepository dataSourceProject = provideProjectDataSource(context);
+        Executor executor = provideExecutor();
+        return new ProjectModelFactory(dataSourceProject, executor);
+
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package com.cleanup.todoc.ui;
+package com.cleanup.todoc.ViewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,26 +11,18 @@ import com.cleanup.todoc.repositories.TaskDataRepository;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-public class ItemViewModel extends ViewModel {
+public class TaskViewModel extends ViewModel {
 
     // REPOSITORIES
-    private final ProjectDataRepository projectDataSource;
     private final TaskDataRepository taskDataSource;
     private final Executor executor;
 
     // DATA
 
-    public ItemViewModel(ProjectDataRepository projectDataSource, TaskDataRepository taskDataSource, Executor executor) {
-        this.projectDataSource = projectDataSource;
+    public TaskViewModel(TaskDataRepository taskDataSource, Executor executor) {
         this.taskDataSource = taskDataSource;
         this.executor = executor;
     }
-
-    // -------------
-    // FOR PROJECT
-    // -------------
-
-
 
     // -------------
     // FOR TASK
