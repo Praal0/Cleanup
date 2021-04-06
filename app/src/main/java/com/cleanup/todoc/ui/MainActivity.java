@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
@@ -20,6 +22,9 @@ import android.widget.TextView;
 import com.cleanup.todoc.R;
 import com.cleanup.todoc.ViewModel.ProjectViewModel;
 import com.cleanup.todoc.ViewModel.TaskViewModel;
+import com.cleanup.todoc.injection.Injection;
+import com.cleanup.todoc.injection.ProjectModelFactory;
+import com.cleanup.todoc.injection.TaskModelFactory;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
@@ -38,6 +43,17 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     // 1 - FOR DATA
     private TaskViewModel taskViewModel;
     private ProjectViewModel projectViewModel;
+
+
+    // Init DataBase
+    private void configureViewModel(){
+        TaskModelFactory mTaskModelFactory = Injection.provideTaskModelFactory(this);
+        taskViewModel = ViewModelProviders.of(this, mTaskModelFactory).get(TaskViewModel.class);
+
+        ProjectModelFactory mProjectModelFactory = Injection.provideProjectModelFactory(this);
+        taskViewModel = ViewModelProviders.of(this, mProjectModelFactory).get(TaskViewModel.class);
+
+    }
 
 
     /**
@@ -102,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         setContentView(R.layout.activity_main);
 
+
         listTasks = findViewById(R.id.list_tasks);
         lblNoTasks = findViewById(R.id.lbl_no_task);
 
@@ -114,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 showAddTaskDialog();
             }
         });
+        configureViewModel();
     }
 
     @Override
@@ -181,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                         new Date().getTime()
                 );
 
-                addTask(task);
+                taskViewModel.createTask(task);
 
                 dialogInterface.dismiss();
             }
@@ -216,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * @param task the task to be added to the list
      */
     private void addTask(@NonNull Task task) {
-        this.taskViewModel.createTask(task);
+        taskViewModel.createTask(task);
         updateTasks();
     }
 

@@ -24,27 +24,23 @@ public class Task {
     /**
      * The unique identifier of the task
      */
-    @PrimaryKey
-    @ColumnInfo(name = "id")
+    @PrimaryKey(autoGenerate = true)
     private long id;
 
     /**
      * The unique identifier of the project associated to the task
      */
-    @ColumnInfo(name = "projectId")
     private long projectId;
 
     /**
      * The name of the task
      */
     // Suppress warning because setName is called in constructor
-    @ColumnInfo(name = "name")
     private String name;
 
     /**
      * The timestamp when the task has been created
      */
-    @ColumnInfo(name = "creationTimestamp")
     private long creationTimestamp;
 
     /**

@@ -13,13 +13,10 @@ import java.util.List;
 @Dao
 public interface ProjectDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Project project);
-
-    @Query("DELETE FROM project")
-    void deleteAll();
+    long insert(Project project);
 
     @Query("SELECT * FROM project WHERE id = :id LIMIT 1")
-    public LiveData<Project> loadProjectById(long id);
+    LiveData<Project> loadProjectById(long id);
 
     @Query("SELECT * from project")
     LiveData<List<Project>> loadAllProjects();

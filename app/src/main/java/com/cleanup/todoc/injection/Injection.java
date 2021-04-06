@@ -22,17 +22,18 @@ public class Injection {
 
     public static Executor provideExecutor(){ return Executors.newSingleThreadExecutor(); }
 
-    public static TaskModelFactory provideProjectModelFactory(Context context) {
-        TaskDataRepository dataSourceTask = provideTaskDataSource(context);
+
+    public static ProjectModelFactory provideProjectModelFactory(Context context) {
+        ProjectDataRepository projectSource = provideProjectDataSource(context);
         Executor executor = provideExecutor();
-        return new TaskModelFactory(dataSourceTask, executor);
+        return new ProjectModelFactory(projectSource, executor);
     }
 
-    public static ProjectModelFactory provideTaskModelFactory(Context context) {
-        ProjectDataRepository dataSourceProject = provideProjectDataSource(context);
-        Executor executor = provideExecutor();
-        return new ProjectModelFactory(dataSourceProject, executor);
 
+    public static TaskModelFactory provideTaskModelFactory(Context context) {
+        TaskDataRepository taskSource = provideTaskDataSource(context);
+        Executor executor = provideExecutor();
+        return new TaskModelFactory(taskSource, executor);
     }
 
 
