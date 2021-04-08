@@ -1,5 +1,6 @@
 package com.cleanup.todoc.ViewModel;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -13,36 +14,38 @@ import java.util.concurrent.Executor;
 
 public class TaskViewModel extends ViewModel {
 
-    // REPOSITORIES
-    private final TaskDataRepository taskDataSource;
-    private final Executor executor;
+    private final ProjectDataRepository mProjectDataSource;
+    private final TaskDataRepository mTaskDataSource;
+    private final Executor mExecutor;
 
-    // DATA
+    @Nullable
+    private LiveData<List<Project>> mProjects;
 
-    public TaskViewModel(TaskDataRepository taskDataSource, Executor executor) {
-        this.taskDataSource = taskDataSource;
-        this.executor = executor;
+    public TaskViewModel(ProjectDataRepository projectDataSource, TaskDataRepository taskDataSource, Executor executor) {
+        mProjectDataSource = projectDataSource;
+        mTaskDataSource = taskDataSource;
+        mExecutor = executor;
     }
 
-    // -------------
-    // FOR TASK
-    // -------------
+    public void init() {
+        if (mProjects == null)
+            mProjects = mProjectDataSource.getProjects();
+    }
+
+    @Nullable
+    public LiveData<List<Project>> getProjects() {
+        return mProjects;
+    }
+
+    public LiveData<List<Task>> getTasks() {
+        return mTaskDataSource.getTasks();
+    }
 
     public void createTask(Task task) {
-        executor.execute(() -> {
-            taskDataSource.createItem(task);
-        });
+        mExecutor.execute(() -> mTaskDataSource.createTask(task));
     }
 
     public void deleteTask(Task task) {
-        executor.execute(() -> {
-            taskDataSource.deleteItem(task);
-        });
-    }
-
-    public void updateTask(Task task) {
-        executor.execute(() -> {
-            taskDataSource.updateItem(task);
-        });
+        mExecutor.execute(() -> mTaskDataSource.deleteTask(task));
     }
 }

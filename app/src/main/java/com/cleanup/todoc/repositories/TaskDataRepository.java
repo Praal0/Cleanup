@@ -8,21 +8,21 @@ import com.cleanup.todoc.model.Task;
 import java.util.List;
 
 public class TaskDataRepository {
-    private final TaskDao taskDao;
+    private final TaskDao mTaskDao;
 
-    public TaskDataRepository(TaskDao taskDao) { this.taskDao = taskDao; }
+    public TaskDataRepository(TaskDao taskDao) {
+        mTaskDao = taskDao;
+    }
 
-    // --- GET ---
+    public LiveData<List<Task>> getTasks() {
+        return mTaskDao.getTasks();
+    }
 
-    public LiveData<Task> getTask(long userId){ return this.taskDao.loadTaskById(userId); }
+    public void createTask(Task task) {
+        mTaskDao.insertTask(task);
+    }
 
-    // --- CREATE ---
-
-    public void createItem(Task task){ taskDao.insertTasks(task); }
-
-    // --- DELETE ---
-    public void deleteItem(Task task){ taskDao.deleteTasks(task); }
-
-    // --- UPDATE ---
-    public void updateItem(Task task){ taskDao.updateTasks(task); }
+    public void deleteTask(Task task) {
+        mTaskDao.deleteTask(task);
+    }
 }

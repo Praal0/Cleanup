@@ -15,19 +15,13 @@ import java.util.List;
 
 @Dao
 public interface TaskDao {
-    @Insert
-    long insertTasks(Task task);
+    @Query("SELECT * FROM tasks")
+    LiveData<List<Task>> getTasks();
 
-    @Update
-    int updateTasks(Task tasks);
+    @Insert
+    void insertTask(Task task);
 
     @Delete
-    int deleteTasks(Task tasks);
-
-    @Query("SELECT * from Task")
-    LiveData<List<Task>> loadAllTasks();
-
-    @Query("SELECT * FROM Task WHERE id = :id LIMIT 1")
-    LiveData<Task> loadTaskById(long id);
+    void deleteTask(Task task);
 
 }

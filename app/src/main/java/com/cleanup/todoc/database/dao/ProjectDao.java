@@ -10,15 +10,14 @@ import com.cleanup.todoc.model.Project;
 
 import java.util.List;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface ProjectDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insert(Project project);
+    @Query("SELECT * FROM projects")
+    LiveData<List<Project>> getProjects();
 
-    @Query("SELECT * FROM project WHERE id = :id LIMIT 1")
-    LiveData<Project> loadProjectById(long id);
-
-    @Query("SELECT * from project")
-    LiveData<List<Project>> loadAllProjects();
+    @Insert(onConflict = REPLACE)
+    void insertProjects(Project... projects);
 
 }

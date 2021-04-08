@@ -8,22 +8,14 @@ import com.cleanup.todoc.model.Project;
 import java.util.List;
 
 public class ProjectDataRepository {
-    private final ProjectDao projectDao;
-    private LiveData<List<Project>> allProjects;
+    private final ProjectDao mProjectDao;
 
-
-
-    public ProjectDataRepository(ProjectDao projectDao){
-        this.projectDao = projectDao;
-        allProjects = this.projectDao.loadAllProjects();
-    }
-
-    // --- GET PROJECT ---
-    public LiveData<Project> getProject(long projectId) { return this.projectDao.loadProjectById(projectId); }
-
-
-    public LiveData<List<Project>> getAllProjects() {
-        return allProjects;
+    public ProjectDataRepository(ProjectDao projectDao) {
+            mProjectDao = projectDao;
+        }
+        public LiveData<List<Project>> getProjects() {
+            return mProjectDao.getProjects();
+        }
     }
 
 
@@ -31,4 +23,4 @@ public class ProjectDataRepository {
 
 
 
-}
+
