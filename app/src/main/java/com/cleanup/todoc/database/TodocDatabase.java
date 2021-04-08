@@ -15,25 +15,23 @@ import com.cleanup.todoc.database.dao.TaskDao;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
-import java.util.Date;
-
 @Database(entities = {Project.class, Task.class}, version = 1, exportSchema = false)
-public abstract class SaveMyTripDatabase extends RoomDatabase {
-
+public abstract class TodocDatabase extends RoomDatabase {
     // --- SINGLETON ---
-    private static volatile SaveMyTripDatabase INSTANCE;
+    public static volatile TodocDatabase INSTANCE;
 
     // --- DAO ---
     public abstract ProjectDao projectDao();
     public abstract TaskDao taskDao();
 
-    // --- INSTANCE ---
-    public static SaveMyTripDatabase getInstance(Context context) {
+
+    public static TodocDatabase getInstance(Context context) {
         if (INSTANCE == null) {
-            synchronized (SaveMyTripDatabase.class) {
+            synchronized (TodocDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            SaveMyTripDatabase.class, "MyDatabase.db")
+                            TodocDatabase.class,
+                            "TodocDatabase.db")
                             .addCallback(prepopulateDatabase())
                             .build();
                 }
@@ -42,14 +40,13 @@ public abstract class SaveMyTripDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    // ---
-
-    private static Callback prepopulateDatabase(){
+    private static Callback prepopulateDatabase() {
         return new Callback() {
 
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
+
                 Project[] projects = Project.getAllProjects();
                 for (Project project : projects) {
                     ContentValues contentValues = new ContentValues();
@@ -61,4 +58,7 @@ public abstract class SaveMyTripDatabase extends RoomDatabase {
             }
         };
     }
+
+
 }
+

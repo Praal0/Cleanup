@@ -4,19 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cleanup.todoc.ViewModel.TaskViewModel;
 import com.cleanup.todoc.repositories.ProjectDataRepository;
 import com.cleanup.todoc.repositories.TaskDataRepository;
-import com.cleanup.todoc.ViewModel.TaskViewModel;
 
 import java.util.concurrent.Executor;
 
-public class TaskModelFactory implements ViewModelProvider.Factory {
-
+public class ViewModelFactory implements ViewModelProvider.Factory {
     private final ProjectDataRepository mProjectDataSource;
     private final TaskDataRepository mTaskDataSource;
     private final Executor mExecutor;
 
-    public TaskModelFactory(ProjectDataRepository projectDataSource, TaskDataRepository taskDataSource, Executor executor) {
+    public ViewModelFactory(ProjectDataRepository projectDataSource, TaskDataRepository taskDataSource, Executor executor) {
         mProjectDataSource = projectDataSource;
         mTaskDataSource = taskDataSource;
         mExecutor = executor;

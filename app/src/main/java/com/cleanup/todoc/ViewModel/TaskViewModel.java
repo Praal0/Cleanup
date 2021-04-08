@@ -14,10 +14,13 @@ import java.util.concurrent.Executor;
 
 public class TaskViewModel extends ViewModel {
 
+
+    // REPOSITORIES
     private final ProjectDataRepository mProjectDataSource;
     private final TaskDataRepository mTaskDataSource;
     private final Executor mExecutor;
 
+    // DATA
     @Nullable
     private LiveData<List<Project>> mProjects;
 
@@ -32,10 +35,19 @@ public class TaskViewModel extends ViewModel {
             mProjects = mProjectDataSource.getProjects();
     }
 
+    // -------------
+    // FOR PROJECT
+    // -------------
+
+
     @Nullable
     public LiveData<List<Project>> getProjects() {
         return mProjects;
     }
+
+    // -------------
+    // FOR TASKS
+    // -------------
 
     public LiveData<List<Task>> getTasks() {
         return mTaskDataSource.getTasks();

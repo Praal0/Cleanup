@@ -22,7 +22,7 @@ import com.cleanup.todoc.R;
 import com.cleanup.todoc.ViewModel.ProjectViewModel;
 import com.cleanup.todoc.ViewModel.TaskViewModel;
 import com.cleanup.todoc.injection.Injection;
-import com.cleanup.todoc.injection.TaskModelFactory;
+import com.cleanup.todoc.injection.ViewModelFactory;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
@@ -42,10 +42,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * List of all projects available in the application
      */
 
-    private final Project[] allProjects = Project.getAllProjects();
+    private List<Project> allProjects;
 
     private TaskViewModel mTaskViewModel;
-    private ProjectViewModel mProjectViewModel;
 
     /**
      * The adapter which handles the list of tasks
@@ -93,43 +92,43 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         listTasks = findViewById(R.id.list_tasks);
         lblNoTasks = findViewById(R.id.lbl_no_task);
-
         adapter = new TasksAdapter(this);
         listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listTasks.setAdapter(adapter);
 
+        btnAddTask();
+        configureTaskViewModel();
+        configureProjectViewModel();
+        getProjects();
+        getTasks();
+    }
+
+    private void configureProjectViewModel() {
+    }
+
+    private void btnAddTask() {
         findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAddTaskDialog();
             }
         });
-
-        configureTaskViewModel();
-        getProjects();
-        getTasks();
     }
 
     private void configureTaskViewModel() {
-        TaskModelFactory mTaskModelFactory = Injection.provideViewModelFactory(this);
-        mTaskViewModel = new ViewModelProvider(this,mTaskModelFactory).get(TaskViewModel.class);
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
+        mTaskViewModel = new ViewModelProvider(this,viewModelFactory).get(TaskViewModel.class);
         mTaskViewModel.init();
     }
-
-    /*private void configureProjectViewModel(){
-        ProjectModelFactory mProjectModelFactory = Injection.provideProjectModelFactory(this);
-        mProjectViewModel = ViewModelProviders.of(this,mProjectModelFactory).get(ProjectViewModel.class);
-        mProjectViewModel.init();
-    }*/
 
     private void getProjects() {
         mTaskViewModel.getProjects().observe(this, this::updateProjects);
     }
 
     private void updateProjects(List<Project> projects) {
+        allProjects = projects;
     }
 
     private void getTasks() {
@@ -188,8 +187,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
-
-
                 Task task = new Task(
                         taskProject.getId(),
                         taskName,
