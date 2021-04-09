@@ -1,13 +1,19 @@
 package com.cleanup.todoc;
 
+import androidx.room.Room;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.ui.MainActivity;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,8 +36,23 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(AndroidJUnit4.class)
 public class MainActivityInstrumentedTest {
+    private TodocDatabase database;
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
+
+    @Before
+    public void initDatabase()  {
+        this.database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
+                TodocDatabase.class)
+                .allowMainThreadQueries()
+                .build();
+
+    }
+
+    @After
+    public void closeDatabase() {
+        this.database.close();
+    }
 
     @Test
     public void addAndRemoveTask() {
@@ -59,8 +80,10 @@ public class MainActivityInstrumentedTest {
     }
 
     @Test
-    public void sortTasks() {
+    public void sortTasksAlphabetical() {
+
         MainActivity activity = rule.getActivity();
+        RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
 
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("aaa Tâche example"));
@@ -118,5 +141,24 @@ public class MainActivityInstrumentedTest {
                 .check(matches(withText("zzz Tâche example")));
         onView(withRecyclerView(R.id.list_tasks).atPositionOnView(2, R.id.lbl_task_name))
                 .check(matches(withText("aaa Tâche example")));
+
+        // We remove all elements in list 
+        onView(withId(R.id.list_tasks)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.img_delete)));
+        onView(withId(R.id.list_tasks)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.img_delete)));
+        onView(withId(R.id.list_tasks)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.img_delete)));
+
+
+
     }
+
+
+
 }
+
+
+
+
+
