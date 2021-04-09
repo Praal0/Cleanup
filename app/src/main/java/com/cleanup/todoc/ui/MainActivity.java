@@ -19,12 +19,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.ViewModel.ProjectViewModel;
 import com.cleanup.todoc.ViewModel.TaskViewModel;
 import com.cleanup.todoc.injection.Injection;
 import com.cleanup.todoc.injection.ViewModelFactory;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Collections;
 import java.util.Date;
@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private List<Project> allProjects;
 
     private TaskViewModel mTaskViewModel;
+
+    private View viewdialog;
 
     /**
      * The adapter which handles the list of tasks
@@ -100,12 +102,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         btnAddTask();
         configureTaskViewModel();
-        configureProjectViewModel();
         getProjects();
         getTasks();
-    }
-
-    private void configureProjectViewModel() {
     }
 
     private void btnAddTask() {
@@ -123,17 +121,13 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         mTaskViewModel.init();
     }
 
-    private void getProjects() {
-        mTaskViewModel.getProjects().observe(this, this::updateProjects);
-    }
-
-    private void updateProjects(List<Project> projects) {
-        allProjects = projects;
-    }
+    private void getProjects() { mTaskViewModel.getProjects().observe(this, this::updateProjects);}
 
     private void getTasks() {
         mTaskViewModel.getTasks().observe(this, this::updateTasks);
     }
+
+    private void updateProjects(List<Project> projects) { allProjects = projects; }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -184,6 +178,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             // If a name has not been set
             if (taskName.trim().isEmpty()) {
                 dialogEditText.setError(getString(R.string.empty_task_name));
+                Snackbar
+                        .make(viewdialog, R.string.empty_task_name, Snackbar.LENGTH_SHORT)
+                        .show();
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
@@ -295,7 +292,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
                     @Override
                     public void onClick(View view) {
+                        viewdialog = view;
                         onPositiveButtonClick(dialog);
+
                     }
                 });
             }

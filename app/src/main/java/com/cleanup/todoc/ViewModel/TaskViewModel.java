@@ -39,7 +39,6 @@ public class TaskViewModel extends ViewModel {
     // FOR PROJECT
     // -------------
 
-
     @Nullable
     public LiveData<List<Project>> getProjects() {
         return mProjects;

@@ -13,12 +13,14 @@ import com.cleanup.todoc.model.Task;
 
 import java.util.List;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface TaskDao {
     @Query("SELECT * FROM tasks")
     LiveData<List<Task>> getTasks();
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insertTask(Task task);
 
     @Delete
