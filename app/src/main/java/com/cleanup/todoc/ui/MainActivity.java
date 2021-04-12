@@ -19,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.ViewModel.TaskViewModel;
+import com.cleanup.todoc.viewModel.TaskViewModel;
 import com.cleanup.todoc.injection.Injection;
 import com.cleanup.todoc.injection.ViewModelFactory;
 import com.cleanup.todoc.model.Project;

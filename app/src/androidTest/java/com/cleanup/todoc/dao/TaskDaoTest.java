@@ -6,7 +6,7 @@ import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.cleanup.todoc.LiveDataTestUtil;
+import com.cleanup.todoc.iteraction.LiveDataTestUtil;
 import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
@@ -79,6 +79,7 @@ public class TaskDaoTest {
         assertEquals(task1.getName(), tasks.get(0).getName());
         assertEquals(task3.getName(), tasks.get(2).getName());
         assertEquals(task5.getName(), tasks.get(4).getName());
+
         assertEquals(task1.getCreationTimestamp(), tasks.get(0).getCreationTimestamp());
         assertEquals(task3.getCreationTimestamp(), tasks.get(2).getCreationTimestamp());
         assertEquals(task5.getCreationTimestamp(), tasks.get(4).getCreationTimestamp());

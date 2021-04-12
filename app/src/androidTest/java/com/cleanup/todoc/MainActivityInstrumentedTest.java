@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cleanup.todoc.iteraction.MyViewAction;
 import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.ui.MainActivity;
 
@@ -24,7 +25,7 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.cleanup.todoc.TestUtils.withRecyclerView;
+import static com.cleanup.todoc.iteraction.TestUtils.withRecyclerView;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -142,7 +143,7 @@ public class MainActivityInstrumentedTest {
         onView(withRecyclerView(R.id.list_tasks).atPositionOnView(2, R.id.lbl_task_name))
                 .check(matches(withText("aaa Tâche example")));
 
-        // We remove all elements in list 
+        // We remove all elements in list
         onView(withId(R.id.list_tasks)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.img_delete)));
         onView(withId(R.id.list_tasks)).perform(

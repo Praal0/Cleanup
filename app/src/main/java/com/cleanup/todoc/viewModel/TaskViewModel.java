@@ -1,4 +1,4 @@
-package com.cleanup.todoc.ViewModel;
+package com.cleanup.todoc.viewModel;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
