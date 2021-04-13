@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
+import com.cleanup.todoc.events.DeleteTasksEvent;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,7 +136,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
                 public void onClick(View view) {
                     final Object tag = view.getTag();
                     if (tag instanceof Task) {
-                        TaskViewHolder.this.deleteTaskListener.onDeleteTask((Task) tag);
+                        //Launch event to delete task
+                        EventBus.getDefault().post(new DeleteTasksEvent((Task) tag));
                     }
                 }
             });

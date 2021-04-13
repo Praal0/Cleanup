@@ -19,12 +19,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
+import com.cleanup.todoc.events.AddTasksEvent;
+import com.cleanup.todoc.events.DeleteTasksEvent;
 import com.cleanup.todoc.viewModel.TaskViewModel;
 import com.cleanup.todoc.injection.Injection;
 import com.cleanup.todoc.injection.ViewModelFactory;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Collections;
 import java.util.Date;
@@ -106,6 +111,18 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         getTasks();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void btnAddTask() {
         findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,9 +170,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         return super.onOptionsItemSelected(item);
     }
 
+    //Remplace with eventbus event
     @Override
     public void onDeleteTask(Task task) {
-        mTaskViewModel.deleteTask(task);
     }
 
     /**
@@ -190,7 +207,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                         new Date().getTime()
                 );
 
-                addTask(task);
+                //Lauch event to create tasks
+                EventBus.getDefault().post(new AddTasksEvent(task));
 
                 dialogInterface.dismiss();
             }
@@ -225,7 +243,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * @param task the task to be added to the list
      */
     private void addTask(@NonNull Task task) {
-        mTaskViewModel.createTask(task);
+
+
     }
 
     /**
@@ -338,5 +357,15 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
          * No sort
          */
         NONE
+    }
+
+    @Subscribe
+    public void onDeleteEnvent(DeleteTasksEvent event) {
+        mTaskViewModel.deleteTask(event.task);
+    }
+
+    @Subscribe
+    public void onCreateTasks(AddTasksEvent event){
+        mTaskViewModel.createTask(event.task);
     }
 }
