@@ -1,6 +1,6 @@
 # Cleanup
 
- [![forthebadge](https://forthebadge.com/images/badges/uses-java.svg)](https://forthebadge.com)
+ [![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://forthebadge.com)
 
 # Todoc l'application de geestion
 
