@@ -11,7 +11,7 @@ Todoc est une application de gestion de vos différentes taches a effectuer dans
 
 ## Contribute to the project
 
-Sleep Well is an open source project.
+Todoc is an open source project.
 
 ## Authors
 
