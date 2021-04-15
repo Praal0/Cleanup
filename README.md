@@ -15,6 +15,6 @@ Todoc is an open source project.
 
 ## Authors
 
-Dorian Guerrerp
+Dorian Guerrero
 
 ## Licensing
