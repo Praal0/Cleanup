@@ -6,9 +6,7 @@ import androidx.lifecycle.Observer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Philippe on 02/03/2018.
- */
+
 
 public class LiveDataTestUtil {
     public static <T> T getValue(final LiveData<T> liveData) throws InterruptedException {

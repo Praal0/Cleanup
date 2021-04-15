@@ -55,7 +55,7 @@ public class TaskDaoTest {
 
     @Test
     public void insertAndGetTask() throws InterruptedException {
-        List<Project> projects = LiveDataTestUtil.getValue(this.database.projectDao().getProjects());
+        List<Project> projectsAdd = LiveDataTestUtil.getValue(this.database.projectDao().getProjects());
 
         this.database.taskDao().insertTask(this.task1);
         this.database.taskDao().insertTask(this.task2);
@@ -70,11 +70,11 @@ public class TaskDaoTest {
         tasks = LiveDataTestUtil.getValue(this.database.taskDao().getTasks());
 
         assertEquals(5, tasks.size());
-        assertEquals(projects.get(0).getId(), tasks.get(0).getProjectId());
-        assertEquals(projects.get(1).getId(), tasks.get(1).getProjectId());
-        assertEquals(projects.get(1).getId(), tasks.get(2).getProjectId());
-        assertEquals(projects.get(2).getId(), tasks.get(3).getProjectId());
-        assertEquals(projects.get(2).getId(), tasks.get(4).getProjectId());
+        assertEquals(projectsAdd.get(0).getId(), tasks.get(0).getProjectId());
+        assertEquals(projectsAdd.get(1).getId(), tasks.get(1).getProjectId());
+        assertEquals(projectsAdd.get(1).getId(), tasks.get(2).getProjectId());
+        assertEquals(projectsAdd.get(2).getId(), tasks.get(3).getProjectId());
+        assertEquals(projectsAdd.get(2).getId(), tasks.get(4).getProjectId());
 
         assertEquals(task1.getName(), tasks.get(0).getName());
         assertEquals(task3.getName(), tasks.get(2).getName());
@@ -87,7 +87,6 @@ public class TaskDaoTest {
 
     @Test
     public void deleteAndGetTask() throws InterruptedException {
-        List<Project> projects = LiveDataTestUtil.getValue(this.database.projectDao().getProjects());
 
         this.database.taskDao().insertTask(this.task1);
         this.database.taskDao().insertTask(this.task2);
