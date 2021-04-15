@@ -2,6 +2,7 @@ package com.cleanup.todoc;
 
 import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -81,7 +82,7 @@ public class MainActivityInstrumentedTest {
     }
 
     @Test
-    public void sortTasksAlphabetical() {
+    public void sortTasksAlphabetical() throws InterruptedException {
 
         MainActivity activity = rule.getActivity();
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
@@ -146,12 +147,12 @@ public class MainActivityInstrumentedTest {
         // We remove all elements in list
         onView(withId(R.id.list_tasks)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.img_delete)));
+        Thread.sleep(50);
         onView(withId(R.id.list_tasks)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.img_delete)));
+        Thread.sleep(50);
         onView(withId(R.id.list_tasks)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.img_delete)));
-
-
 
     }
 
