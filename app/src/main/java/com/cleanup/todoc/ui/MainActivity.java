@@ -41,16 +41,13 @@ import java.util.List;
  *
  * @author Gaëtan HERFRAY
  */
-public class MainActivity extends AppCompatActivity implements TasksAdapter.DeleteTaskListener {
+public class MainActivity extends AppCompatActivity  {
 
     /**
      * List of all projects available in the application
      */
-
     private List<Project> allProjects;
-
     private TaskViewModel mTaskViewModel;
-
     private View viewdialog;
 
     /**
@@ -72,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      */
     @Nullable
     private EditText dialogEditText = null;
-
     /**
      * Spinner that allows the user to associate a project to a task
      */
@@ -101,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         setContentView(R.layout.activity_main);
         listTasks = findViewById(R.id.list_tasks);
         lblNoTasks = findViewById(R.id.lbl_no_task);
-        adapter = new TasksAdapter(this);
+        adapter = new TasksAdapter();
         listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listTasks.setAdapter(adapter);
 
@@ -170,11 +166,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         return super.onOptionsItemSelected(item);
     }
 
-    //Remplace with eventbus event
-    @Override
-    public void onDeleteTask(Task task) {
-    }
-
     /**
      * Called when the user clicks on the positive button of the Create Task Dialog.
      *
@@ -238,16 +229,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     }
 
     /**
-     * Adds the given task to the list of created tasks.
-     *
-     * @param task the task to be added to the list
-     */
-    private void addTask(@NonNull Task task) {
-
-
-    }
-
-    /**
      * Updates the list of tasks in the UI
      */
     private void updateTasks(List<Task> tasks) {
@@ -271,7 +252,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 case OLD_FIRST:
                     Collections.sort(tasks, new Task.TaskOldComparator());
                     break;
-
             }
             adapter.updateTasks(tasks);
         }
@@ -313,12 +293,10 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                     public void onClick(View view) {
                         viewdialog = view;
                         onPositiveButtonClick(dialog);
-
                     }
                 });
             }
         });
-
         return dialog;
     }
 
@@ -358,7 +336,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
          */
         NONE
     }
-
     @Subscribe
     public void onDeleteEnvent(DeleteTasksEvent event) {
         mTaskViewModel.deleteTask(event.task);

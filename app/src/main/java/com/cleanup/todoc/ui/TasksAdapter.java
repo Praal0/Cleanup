@@ -25,11 +25,7 @@ import java.util.List;
  * @author Gaëtan HERFRAY
  */
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
-    /**
-     * The listener for when a task needs to be deleted
-     */
-    @NonNull
-    private final DeleteTaskListener deleteTaskListener;
+
     /**
      * The list of tasks the adapter deals with
      */
@@ -40,9 +36,9 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      * Instantiates a new TasksAdapter.
      *
      */
-    TasksAdapter(@NonNull final DeleteTaskListener deleteTaskListener) {
+    TasksAdapter() {
         this.tasks = new ArrayList<>();
-        this.deleteTaskListener = deleteTaskListener;
+
     }
 
     /**
@@ -59,7 +55,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_task, viewGroup, false);
-        return new TaskViewHolder(view, deleteTaskListener);
+        return new TaskViewHolder(view);
     }
 
     @Override
@@ -113,18 +109,16 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         /**
          * The listener for when a task needs to be deleted
          */
-        private final DeleteTaskListener deleteTaskListener;
+
 
         /**
          * Instantiates a new TaskViewHolder.
          *
-         * @param itemView           the view of the task item
-         * @param deleteTaskListener the listener for when a task needs to be deleted to set
+         * @param itemView the view of the task item
          */
-        TaskViewHolder(@NonNull View itemView, @NonNull DeleteTaskListener deleteTaskListener) {
+        TaskViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            this.deleteTaskListener = deleteTaskListener;
 
             imgProject = itemView.findViewById(R.id.img_project);
             lblTaskName = itemView.findViewById(R.id.lbl_task_name);
