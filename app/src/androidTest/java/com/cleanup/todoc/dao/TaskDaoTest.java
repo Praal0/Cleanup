@@ -3,7 +3,7 @@ package com.cleanup.todoc.dao;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.cleanup.todoc.iteraction.LiveDataTestUtil;
@@ -38,7 +38,7 @@ public class TaskDaoTest {
 
     @Before
     public void initDatabase() throws InterruptedException {
-        this.database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
+        this.database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().getTargetContext(),
                 TodocDatabase.class)
                 .allowMainThreadQueries()
                 .build();
