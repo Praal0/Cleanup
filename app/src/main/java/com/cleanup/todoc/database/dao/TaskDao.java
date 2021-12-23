@@ -15,10 +15,17 @@ import java.util.List;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
+import android.database.Cursor;
+
 @Dao
 public interface TaskDao {
     @Query("SELECT * FROM tasks")
     LiveData<List<Task>> getTasks();
+
+
+    @Query("SELECT * FROM tasks WHERE id = :userId")
+    Cursor getItemsWithCursor(long userId);
+
 
     @Insert(onConflict = REPLACE)
     void insertTask(Task task);

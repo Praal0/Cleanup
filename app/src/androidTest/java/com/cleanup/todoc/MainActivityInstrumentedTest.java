@@ -85,7 +85,6 @@ public class MainActivityInstrumentedTest {
     public void sortTasksAlphabetical() throws InterruptedException {
 
         MainActivity activity = rule.getActivity();
-        RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
 
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("aaa Tâche example"));

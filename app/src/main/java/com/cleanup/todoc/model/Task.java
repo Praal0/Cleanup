@@ -11,6 +11,8 @@ import java.util.Comparator;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+import android.content.ContentValues;
+
 /**
  * <p>Model for the tasks of the application.</p>
  *
@@ -173,5 +175,15 @@ public class Task {
         public int compare(Task left, Task right) {
             return (int) (left.creationTimestamp - right.creationTimestamp);
         }
+    }
+
+    // --- UTILS ---
+    public static Task fromContentValues(ContentValues values) {
+        final Task item = new Task();
+        if (values.containsKey("text")) item.setText(values.getAsString("text"));
+        if (values.containsKey("category")) item.setCategory(values.getAsInteger("category"));
+        if (values.containsKey("isSelected")) item.setSelected(values.getAsBoolean("isSelected"));
+        if (values.containsKey("userId")) item.setUserId(values.getAsLong("userId"));
+        return item;
     }
 }
